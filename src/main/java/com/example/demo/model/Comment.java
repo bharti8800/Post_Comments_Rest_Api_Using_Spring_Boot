@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 public class Comment {
@@ -19,6 +21,7 @@ public class Comment {
 	private String desc;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="post_id")
 	private Post post;
 

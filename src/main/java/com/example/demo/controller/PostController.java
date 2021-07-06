@@ -22,35 +22,47 @@ import com.example.demo.repository.PostRepository;
 @RestController
 public class PostController {
 	
-	
-	  @Autowired PostRepo postRepository;
+	  @Autowired
+	  PostRepo postRepository;
 	  
-	  @GetMapping("/posts") public List<Post> retrievePosts(){ return
-	  postRepository.findAll(); }
-	  
-	  @PostMapping("/posts") public ResponseEntity<Object> createPost(@RequestBody
-	  Post post){ if(post == null) { return ResponseEntity.noContent().build(); }
-	  Post newPost = postRepository.save(post); URI location =
-	  ServletUriComponentsBuilder.fromCurrentRequest()
-	  .path("/{id}").buildAndExpand(newPost.getId()).toUri();
-	  System.out.println(location); return
-	  ResponseEntity.created(location).build(); }
-	  
-	  @GetMapping("/posts/{id}") public Optional<Post>
-	  retrievePost(@PathVariable("id") int id){ return postRepository.findById(id);
+	  @GetMapping("/posts") 
+	  public List<Post> retrievePosts(){ 
+		  return postRepository.findAll(); 
 	  }
 	  
-	  @DeleteMapping("/posts/{id}") public ResponseEntity<Object>
-	  deletePost(@PathVariable("id") int id){ postRepository.deleteById(id); return
-	  ResponseEntity.noContent().build(); }
+	  @PostMapping("/posts") 
+	  public ResponseEntity<Object> createPost(@RequestBody
+	  Post post){
+		  if(post == null) {
+			  return ResponseEntity.noContent().build();
+		  }
+		  Post newPost = postRepository.save(post); 
+		  URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
+		  //System.out.println(location); 
+		  return ResponseEntity.created(location).build(); 
+	  }
 	  
-	  @PutMapping("/posts/{id}") public ResponseEntity<Object>
-	  updatePost(@PathVariable("id") int id, @RequestBody Post post){ if(post ==
-	  null) { return ResponseEntity.noContent().build(); } post.setId(id); Post
-	  newPost = postRepository.save(post); URI location =
-	  ServletUriComponentsBuilder.fromCurrentRequest()
-	  .path("/{id}").buildAndExpand(newPost.getId()).toUri();
+	  @GetMapping("/posts/{id}") 
+	  public Optional<Post> retrievePost(@PathVariable("id") int id){
+		  return postRepository.findById(id);
+	  }
 	  
-	  return ResponseEntity.created(location).build(); }
+	  @DeleteMapping("/posts/{id}")
+	  public ResponseEntity<Object> deletePost(@PathVariable("id") int id){ 
+		  postRepository.deleteById(id); 
+		  return ResponseEntity.noContent().build(); 
+	  }
+	  
+	  @PutMapping("/posts/{id}") 
+	  public ResponseEntity<Object> updatePost(@PathVariable("id") int id, @RequestBody Post post){ 
+		  if(post == null) {
+			  return ResponseEntity.noContent().build();
+		  }
+		  post.setId(id);
+		  Post newPost = postRepository.save(post); 
+		  URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
+	  
+		  return ResponseEntity.created(location).build();
+	  }
 	 
 }

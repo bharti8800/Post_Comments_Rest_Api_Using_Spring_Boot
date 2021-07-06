@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 public class Post {
@@ -27,6 +29,11 @@ public class Post {
 		this.title = title;
 		this.comments = comments;
 		
+	}
+	
+	public Post(String title) {
+		super();
+		this.title = title;
 	}
 	public int getId() {
 		return id;
@@ -45,14 +52,23 @@ public class Post {
 	}
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
-		for(Comment comment : comments) {
-			comment.setPost(this);
-			System.out.println("here");
+		if(comments!=null) {
+			for(Comment comment : comments) {
+				comment.setPost(this);
+				System.out.println("here");
+			}
 		}
 	}
 	public Post() {
 		super();
 	}
+	public Post(int id, String title) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.id = id;
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", title=" + title + ", comments=" + comments + "]";
